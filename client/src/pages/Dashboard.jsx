@@ -4,7 +4,7 @@ import Newscard from "../components/Newscard";
 
 export default function Sidebar() {
   const [input, setInput] = useState("");
-  const [p, setP] = useState("Football");
+  const [p, setP] = useState("");
   const [allprefs, setallprefs] = useState([]);
   const [news, setNews] = useState([]);
   const [raw, setRaw] = useState([]);
@@ -29,6 +29,9 @@ export default function Sidebar() {
     );
   };
 
+  
+  
+
   useEffect(() => {
     const getNews = async () => {
       try {
@@ -43,6 +46,8 @@ export default function Sidebar() {
       }
     };
 
+
+    
     if (p && p.length > 0) {
       getNews();
     }
@@ -61,6 +66,8 @@ export default function Sidebar() {
       }
     }
   };
+
+
 
   return (
     <>

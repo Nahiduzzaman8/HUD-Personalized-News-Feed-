@@ -17,8 +17,6 @@ SECRET_KEY = "your_secret_key_here"  # keep this secret, use env variable in pro
 #!fffffffffffffffffffffffffffffffffffffffffffffffffffff
 @app.route("/getNews", methods=["POST"])
 def getNews():
-    
-    pref = "Football"
     data = request.get_json()
     pref = data.get('allPrefs')
     
