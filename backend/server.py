@@ -1,18 +1,111 @@
 from flask import Flask, jsonify,request
 from werkzeug.security import generate_password_hash
 from sql_con import connect_to_db
-import hashlib
-import jwt
+import hashlib, sql_con, dao_users, requests, jwt
 from datetime import datetime
-import sql_con
-import dao_users
-import requests
 from flask_cors import CORS, cross_origin
+from serpapi import GoogleSearch
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/getNews": {"origins": "http://127.0.0.1:5173"}})
+CORS(app)
 SECRET_KEY = "your_secret_key_here"  # keep this secret, use env variable in production
+
+
+
+
+#!fffffffffffffffffffffffffffffffffffffffffffffffffffff
+@app.route("/getNews", methods=["POST"])
+def getNews():
+    
+    pref = "Football"
+    data = request.get_json()
+    pref = data.get('allPrefs')
+    
+    params = {
+            "api_key": "6306dd79bed2954c61db0f189e0047417c124b5ee0825092957082d20ea30960",
+            "engine": "google",
+            "q": f"{pref}",
+            "location": "Austin, Texas, United States",
+            "google_domain": "google.com",
+            "gl": "bd",
+            "hl": "en",
+            "safe": "off"
+            }
+    search = GoogleSearch(params)
+    news = search.get_dict()
+    
+    return jsonify(news)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -103,42 +196,6 @@ def login_user():
         if cnx:
             cnx.close()
 
-
-
-#!fffffffffffffffffffffffffffffffffffffffffffffffffffff
-
-@app.route("/getNews", methods=['GET', 'POST', 'OPTIONS'])
-@cross_origin(origins=["http://localhost:5173", "http://127.0.0.1:5173"])
-def getNews():
-    if request.method == 'OPTIONS':
-        # Handle preflight requests
-        return jsonify({}), 200
-
-    preferences = []
-    if request.method == 'POST':
-        try:
-            preferences = request.get_json()  # receive list from frontend
-        except Exception as e:
-            return jsonify({"error": "Invalid JSON", "details": str(e)}), 400
-
-    # If no preferences sent, fallback to default
-    if not preferences:
-        preferences = ["Ronaldo"]
-
-    # Build query string (join preferences with OR)
-    query = " OR ".join(preferences)
-
-    url = (
-        "https://newsapi.org/v2/everything?"
-        f"q={query}&"
-        "from=2025-09-25&"
-        "sortBy=popularity&"
-        "apiKey=269e2c11b227414faccf57211539c6d6"
-    )
-
-    response = requests.get(url)
-    data = response.json()
-    return jsonify(data)
 
 
 
