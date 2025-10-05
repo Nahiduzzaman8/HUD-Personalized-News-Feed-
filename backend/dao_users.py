@@ -1,6 +1,32 @@
 import mysql.connector
 import sql_con
 
+
+# Get user info by username
+def get_user_by_username(cnx, username):
+    cursor = cnx.cursor(dictionary=True)
+    query = "SELECT * FROM users WHERE username = %s"
+    cursor.execute(query,(username,)) 
+    user = cursor.fetchone()
+    cursor.close()
+    if user:
+        return user
+    else:
+        return None
+
+# Get user info by email
+def get_user_by_email(cnx, email):
+    cursor = cnx.cursor(dictionary=True)
+    query = "SELECT * FROM users WHERE email = %s"
+    cursor.execute(query,(email,)) 
+    user = cursor.fetchone()
+    cursor.close()
+    if user:
+        return user
+    else:
+        return None
+
+# Get all data from users table
 def get_all_data_from_users(cnx):
     cursor = cnx.cursor(dictionary=True) 
     query = """
@@ -17,7 +43,7 @@ def get_all_data_from_users(cnx):
     return data
     #SELECT * FROM users;
 
-
+# Insert new user into users table
 def insert_into_users (cnx, userinfo):
     cursor = cnx.cursor()
     query = """
@@ -30,42 +56,8 @@ def insert_into_users (cnx, userinfo):
 
 
 
-def get_user_by_email(cnx, email):
-    cursor = cnx.cursor(dictionary=True)
-    query = "SELECT * FROM users WHERE email = %s"
-    cursor.execute(query,(email,)) 
-    user = cursor.fetchone()
-    cursor.close()
-    return user
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# For testing purpose only
 if __name__ == '__main__': 
     cnx = sql_con.connect_to_db()
     userinfo = (1, 'asdf', 'fasdf', 'asdf','2023-10-27 15:30:00')
