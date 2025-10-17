@@ -1,5 +1,5 @@
-import mysql.connector
-import sql_con
+# import mysql.connector
+# import sql_con
 
 
 # Get user info by username
@@ -26,6 +26,7 @@ def get_user_by_email(cnx, email):
     else:
         return None
 
+
 # Get all data from users table
 def get_all_data_from_users(cnx):
     cursor = cnx.cursor(dictionary=True) 
@@ -43,6 +44,7 @@ def get_all_data_from_users(cnx):
     return data
     #SELECT * FROM users;
 
+
 # Insert new user into users table
 def insert_into_users (cnx, userinfo):
     cursor = cnx.cursor()
@@ -55,11 +57,9 @@ def insert_into_users (cnx, userinfo):
     cursor.close()
 
 
-
-
-# For testing purpose only
-if __name__ == '__main__': 
-    cnx = sql_con.connect_to_db()
-    userinfo = (1, 'asdf', 'fasdf', 'asdf','2023-10-27 15:30:00')
-    insert_into_users (cnx, userinfo)
-    print(get_all_data_from_users(cnx))
+# # For testing purpose only
+# if __name__ == '__main__': 
+#     cnx = sql_con.connect_to_db()
+#     userinfo = (1, 'asdf', 'fasdf', 'asdf','2023-10-27 15:30:00')
+#     insert_into_users (cnx, userinfo)
+#     print(get_all_data_from_users(cnx))

@@ -21,16 +21,15 @@ const LoginPage = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-      console.log(response);
       const data = await response.json();
-      console.log(data);
+      
       if (!response.ok) {
         setMessage({
           type: "error",
           text: data.message || "Invalid credentials.",
         });
       } else {
-        localStorage.setItem("token", data.access_token);
+        localStorage.setItem("token", data.token);
         setMessage({ type: "success", text: "Login successful!" });
 
         setTimeout(() => {
@@ -46,22 +45,79 @@ const LoginPage = () => {
   return (
     <div>
       <div className="grid lg:grid-cols-2 md:grid-cols-2 items-center gap-4">
-        <div className="max-md:order-1 h-screen min-h-full">
-          <img
-            src="https://cdn.pixabay.com/photo/2018/02/12/23/55/hud-3149462_1280.png"
-            className="w-full h-full object-cover"
-            alt="login-image"
-          />
-        </div>
+        {/* Left Info Section */}
+<div className="max-md:order-1 h-screen flex flex-col justify-center items-center relative bg-gradient-to-br from-blue-700 via-purple-700 to-pink-600 text-white overflow-hidden p-10">
+  {/* Abstract floating circles for visual depth */}
+  <div className="absolute top-0 left-0 w-72 h-72 bg-purple-400 rounded-full opacity-20 blur-3xl"></div>
+  <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-300 rounded-full opacity-15 blur-3xl"></div>
 
-        {/*! asdfsdaf */}
+  <div className="relative z-10 max-w-md text-center space-y-6">
+    {/* Heading */}
+    <h1 className="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg">
+      Welcome Back <span className="text-yellow-300">👋</span>
+    </h1>
+
+    {/* Tagline */}
+    <p className="text-base md:text-lg text-blue-100 opacity-90">
+      Get instant access to your personalized AI-curated news feed.  
+      Discover, save, and explore the stories that truly matter.
+    </p>
+
+    {/* Feature Cards */}
+    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="flex items-start gap-3 bg-white/10 p-4 rounded-xl shadow-md hover:scale-105 transition-transform duration-300">
+        <div className="p-2 rounded-full bg-yellow-300 text-blue-900">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c1.104 0 2-.672 2-1.5S13.104 5 12 5s-2 .672-2 1.5S10.896 8 12 8zM12 14v7m0-7a2 2 0 012-2h5.5M12 14a2 2 0 00-2-2H4.5" />
+          </svg>
+        </div>
+        <p className="text-sm md:text-base">Curated news from trusted sources</p>
+      </div>
+
+      <div className="flex items-start gap-3 bg-white/10 p-4 rounded-xl shadow-md hover:scale-105 transition-transform duration-300">
+        <div className="p-2 rounded-full bg-green-300 text-blue-900">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <p className="text-sm md:text-base">Bookmark and read later</p>
+      </div>
+
+      <div className="flex items-start gap-3 bg-white/10 p-4 rounded-xl shadow-md hover:scale-105 transition-transform duration-300">
+        <div className="p-2 rounded-full bg-pink-300 text-blue-900">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12H9m12 10H7a2 2 0 01-2-2V4a2 2 0 012-2h10a2 2 0 012 2v16a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <p className="text-sm md:text-base">AI-powered topic suggestions</p>
+      </div>
+
+      <div className="flex items-start gap-3 bg-white/10 p-4 rounded-xl shadow-md hover:scale-105 transition-transform duration-300">
+        <div className="p-2 rounded-full bg-purple-300 text-blue-900">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+        <p className="text-sm md:text-base">Instant personalized dashboard</p>
+      </div>
+    </div>
+
+    {/* Footer line */}
+    <p className="mt-10 text-sm md:text-base text-blue-200 italic">
+      Your news, your world — tailored by your interests.
+    </p>
+  </div>
+</div>
+
+
+        {/*! Form */}
         <form className="max-w-xl w-full p-6 mx-auto" onSubmit={handleSubmit}>
           <div className="mb-12">
             <h1 className="text-slate-900 text-4xl font-bold">Sign in</h1>
             <p className="text-slate-600 text-sm mt-6">
               Don't have an account{" "}
               <a
-                href="javascript:void(0);"
+                href="/"
                 className="text-blue-600 font-medium hover:underline ml-1 whitespace-nowrap"
               >
                 Register here

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { all } from "axios";
 import Newscard from "../components/Newscard";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
+  
   const [input, setInput] = useState("");
   const [p, setP] = useState("");
   const [allprefs, setallprefs] = useState([]);
   const [news, setNews] = useState([]);
   const [raw, setRaw] = useState([]);
   const [tempNews, setTempNews] = useState([]);
+  const navigate = useNavigate()
+
+  
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -27,22 +32,35 @@ export default function Sidebar() {
     setallprefs((prevItems) =>
       prevItems.filter((_, index) => index !== deleteIndex)
     );
+    
+  };
+
+   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");;
   };
 
   
-  
+  useEffect(() => {
+  if (allprefs.length === 0) {
+    setNews([]);       // Clear main news
+    setTempNews([]);   // Clear temp search news
+  }
+}, [allprefs]);
 
   useEffect(() => {
+    
     const getNews = async () => {
       try {
         let response = await axios.post("http://127.0.0.1:5000/getNews", {
           allPrefs: p,
         });
         let data = response.data.organic_results;
-        setNews((prev) => [...prev, ...data]);
+        setNews((prev) => [...prev, ...data]);  
         setRaw((prev) => [...prev, [response.data]]);
       } catch (error) {
-        console.log(error);
+        console.log("Nahid ",error);
       }
     };
 
@@ -54,18 +72,22 @@ export default function Sidebar() {
   }, [p]);
 
   const searchNews = (value) => {
-    console.log(raw);
-    if (value == 0) {
-      setTempNews([]);
+  if (!value) {  // empty input
+    setTempNews([]);
+    return;
+  }
+
+  const filteredNews = [];
+
+  raw.forEach((item) => {
+    const searchQuery = item[0]?.search_parameters?.q || "";
+    if (searchQuery.toLowerCase().includes(value.toLowerCase())) {
+      filteredNews.push(...item[0]?.organic_results);
     }
-    for (let i = 0; i < raw.length; i++) {
-      if (
-        value.toLowerCase() == raw[i][0]["search_parameters"]["q"].toLowerCase()
-      ) {
-        setTempNews(raw[i][0]["organic_results"]);
-      }
-    }
-  };
+  });
+
+  setTempNews(filteredNews);
+};
 
 
 
@@ -193,14 +215,14 @@ export default function Sidebar() {
           </div>
 
           {/* Bottom Section: Logout */}
-          <div>
+          <form onSubmit={handleLogout}>
             <button
               type="submit"
               className="w-1/4 bg-gray-600 hover:bg-red-500 text-white py-2 rounded"
             >
               Logout
             </button>
-          </div>
+          </form>
         </aside>
 
         {/* Placeholder for main content */}
