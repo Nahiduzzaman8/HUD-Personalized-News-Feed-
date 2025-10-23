@@ -32,15 +32,6 @@ It integrates with **SerpApi** to fetch live articles from Google News and prese
 
 ---
 
-## 🖼️ Project Screenshots
-
-| Register Page | Login Page | Dashboard View |
-| :------------: | :---------: | :-------------: |
-| ![Register Page](assets/register.png) | ![Login Page](assets/login.png) | ![Dashboard](assets/dashboard.png) |
-
-> _Tip:_ You can add your actual screenshots later inside an `assets/` folder.
-
----
 
 ## ⚙️ Installation & Setup
 
