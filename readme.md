@@ -12,8 +12,6 @@
 ![Main Page2](asset/4.jpg)
 ---
 
-
-
 ## ✨ Overview
 
 **HUD (Hyper User Dashboard)** is a personalized news feed web app that delivers real-time news tailored to user preferences.  
@@ -30,8 +28,8 @@ It integrates with **SerpApi** to fetch live articles from Google News and prese
 - 🧠 Flask backend for robust API handling  
 - 🧩 Modular, developer-friendly structure  
 
----
 
+---
 
 ## ⚙️ Installation & Setup
 
@@ -66,10 +64,10 @@ Then open your browser at http://localhost:8000
 
 💡 Future Enhancements
 
-🤖 AI-based article recommendation using NLP
-🌍 Multi-language support
-🔔 Real-time push notifications for trending topics
-📊 User analytics dashboard
+🤖 AI-based article recommendation using NLP.
+🌍 Multi-language support.
+🔔 Real-time push notifications for trending topics.
+📊 User analytics dashboard.
 
 
 🧭 Folder Structure
